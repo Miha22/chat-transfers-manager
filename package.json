@@ -1,0 +1,31 @@
+{
+  "name": "chat-transfers-manager",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Manager for telegram chat transfers",
+  "main": "app.js",
+  "scripts": {
+    "test": "ping google.lv",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miha22/chat-transfers-manager.git"
+  },
+  "author": "Miha22",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Miha22/chat-transfers-manager/issues"
+  },
+  "homepage": "https://github.com/Miha22/chat-transfers-manager#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "telegraf": "^4.8.6"
+  },
+  "devDependencies": {
+    "jshint": "^2.13.5",
+    "nodemon": "^2.0.19"
+  }
+}

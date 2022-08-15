@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "declaration": true,
+      "rootDir": "./",
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "maxNodeModuleJsDepth": 2
+    },
+    "include": ["utils/**/*.d.ts"]
+}

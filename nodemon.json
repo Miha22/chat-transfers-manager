@@ -1,0 +1,6 @@
+{ 
+    "watch": ["./", "nodemon.json"],
+    "ignore": ["tests/*.cjs"],
+    "exec": "node app.js",
+    "ext": "cjs, js, hbs"
+}
