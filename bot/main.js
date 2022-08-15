@@ -1,12 +1,12 @@
-import { Telegraf } from 'telegraf'
-import config from './keys/config.js';
+import { Telegraf } from 'telegraf';
+import config from '../keys/config.js';
 
 function launchBot() {
-    const bot = new Telegraf(process.env.BOT_TOKEN)
+    const bot = new Telegraf(config.BOT_TOKEN);
 
     bot.command('quit', (ctx) => {
         // Explicit usage
-        ctx.telegram.leaveChat(ctx.message.chat.id)
+        ctx.telegram.leaveChat(ctx.message.chat.id);
 
         // Using context shortcut
         ctx.leaveChat();
@@ -14,11 +14,12 @@ function launchBot() {
     });
 
     bot.on('text', (ctx) => {
+        console.log(`${ctx.message.from.username} (${ctx.message.from.first_name} ${ctx.message.from.last_name}) said: ` + ctx.message.text);
         // Explicit usage
-        ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`);
+        //ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`);
 
         // Using context shortcut
-        ctx.reply(`Hello ${ctx.state.role}`);
+        //ctx.reply(`Hello ${ctx.state.role}`);
     });
 
     bot.on('callback_query', (ctx) => {
@@ -39,10 +40,12 @@ function launchBot() {
     });
 
     bot.launch();
+    console.log('Bot launched');
 
     // Enable graceful stop
     process.once('SIGINT', () => bot.stop('SIGINT'));
     process.once('SIGTERM', () => bot.stop('SIGTERM'));
 }
 
-module.exports = { launchBot };
+export default { launchBot };
+export { launchBot };
