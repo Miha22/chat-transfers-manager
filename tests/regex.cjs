@@ -25,34 +25,41 @@ const patternEngRev = /.*([1-9][0-9]?(\u0078|\u0058).+(?=((\u0078|\u0058)[1-9][0
 //const pattern = /.*((\u0078|\u0058|\u0445|\u0425)[1-9][0-9]?.+(?=((\u0078|\u0058|\u0445|\u0425)[1-9][0-9]?)))|.*([1-9][0-9]?(\u0078|\u0058|\u0445|\u0425).+(?=([1-9][0-9]?(\u0078|\u0058|\u0445|\u0425))))/;
 
 //const str = strCombinedRev.replace(/х/g, "x").replace(/Х/g, "x");
-let s = strCombinedRev;
-s = clearX(s);
-const re = /[1-9]x\s/g;
-while ((match = re.exec(s)) != null) {
-    console.log("match found at " + match.index);
-    s = swapChars(s, match.index, match.index + 1);
-}
-console.log(s);
-const matches = s.split(patternEng);
-const garbage = [];
-const items = matches.filter((item, index, array) => {
-    if(typeof item !== 'undefined' && item.length > 3) {
-        return true;
-    }
-    return false;
-}).filter((item, index, array) => {
-    const re = /\u0078[1-9]\s/g;
-    const regIndex = indexOfRegex(item, re);
+const message = "Nado: x2 USB flash disks GoodRam UMM3 32GBx3 USB flash disks HOCO UD9 Mini Car Music USB 2.0 64GBx1 iphone xRx5 Redmi Note 10s";
+//const regex = /(.*|\s?)((\u0078|\u0058)[1-9][0-9]?.+(?=((\u0078|\u0058)[1-9][0-9]?)))/;
+const regexQuantity = /x[1-9]([0-9]?)+?/g;
+const matchesQ = message.match(regexQuantity);//quantities
+const matchesN = message.split(regexQuantity).filter(item => item.length != 0);//names
+console.log(matchesN);
 
-    if(regIndex > 0) {
-        const s = item.substring(regIndex);
-        
+function getItems(str) {
+    let s = strCombinedRev;
+    s = clearX(s);
+    const re = /[1-9]x\s/g;
+    while ((match = re.exec(s)) != null) {
+        s = swapChars(s, match.index, match.index + 1);
+    }
+    console.log(s);
+    const matches = s.split(patternEng);
+    const items = matches.filter((item, index, array) => {
+        if(typeof item !== 'undefined' && item.length > 3) {
+            return true;
+        }
         return false;
-    }
-    return true;
-});
+    }).filter((item, index, array) => {
+        const re = /\u0078[1-9]\s/g;
+        const regIndex = indexOfRegex(item, re);
 
-console.log(items);
+        if(regIndex > 0) {
+            const s = item.substring(regIndex);
+            
+            return false;
+        }
+        return true;
+    });
+
+    return items;
+}
 
 class Item {
     constructor(name, quantity) {
@@ -69,7 +76,7 @@ class Item {
 }
 
 function clearX(str) {
-    return replaceAll(replaceAll(replaceAll(str, 'X', 'x'), 'х', 'x'), 'Х', 'x');
+    return replaceAll(replaceAll(str, 'х', 'x'), 'Х', 'x');
 }
 
 function clearBefore(str) {
@@ -104,16 +111,6 @@ function replaceAll(str, find, replace) {
 
 function replaceAt(str, index, replacement) {
     return str.substring(0, index) + replacement + str.substring(index + replacement.length);
-}
-
-function getItem(str) {
-    console.log(str.codePointAt());
-}
-
-function findItems(str) {
-    const items = [];
-
-
 }
 
 // insert 2 chars
