@@ -30,8 +30,6 @@ const patternEngRev = /.*([1-9][0-9]?(\u0078|\u0058).+(?=((\u0078|\u0058)[1-9][0
 const message = "NadoNadoNadoNado: NadoNadoNado Nado 2x USB flash disks GoodRam UMM3 32GBx3 USB flash disks HOCO UD9 Mini Car Music USB 2.0 64GBx1iphone xRx5 Redmi Note 10sx2 Original USB Cable - HUAWEI HL-1289 (AP-71) USB-C 3.1 vads baltsx1 Portatīvo story displays 350mm Matte OPS 30pin Slim 15.6 1920x1080 x1 Cooler Master MPE-4001-ACABW 400 Wx1Huawei Mate 20 Lite kameras stikliņšx1Ugreen USB 3.0 pagarinājuma vads, 2mx1 AData XPG SX6000 Pro PCIe M.2 Gen3x4 NVME 256GB SSD";
 //const regex = /(.*|\s?)((\u0078|\u0058)[1-9][0-9]?.+(?=((\u0078|\u0058)[1-9][0-9]?)))/;
 
-console.log(getTransfers(message));
-
 function getTransfers(str) {
     const message = normalizeMessage(str);
     console.log(message);

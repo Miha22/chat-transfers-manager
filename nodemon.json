@@ -1,5 +1,5 @@
 { 
     "watch": ["./", "nodemon.json"],
-    "exec": "node tests/scrape.cjs",
+    "exec": "node app.js",
     "ext": "cjs, js, hbs"
 }

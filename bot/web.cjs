@@ -12,10 +12,6 @@ async function search(str, { titles = false, similarityScore = false }) {
   }) : searches.results.map(i => i.title) : searches;
 }
 
-const str = 'AData XPG SX6000 Pro PCIe M.2 Gen';
-
-searchWeb(str, {  }).then(resulsts => console.log(resulsts));
-
 async function searchWeb(str, { titles = true, similarityScore = true, minScore = 0.5, showResults = 5 }) {
   const s = await search(str, { titles: titles, similarityScore: similarityScore });
   const results = collect(s)
@@ -27,3 +23,7 @@ async function searchWeb(str, { titles = true, similarityScore = true, minScore 
 
   return results;
 }
+
+module.exports = {
+	searchWeb: searchWeb,
+};
