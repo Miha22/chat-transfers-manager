@@ -1,3 +1,5 @@
+const collect = require('collect.js');
+
 const emoji = "😀";
 const sRus = 'Х0 M';
 const sEng = 'x1 M';
@@ -25,17 +27,28 @@ const patternEngRev = /.*([1-9][0-9]?(\u0078|\u0058).+(?=((\u0078|\u0058)[1-9][0
 //const pattern = /.*((\u0078|\u0058|\u0445|\u0425)[1-9][0-9]?.+(?=((\u0078|\u0058|\u0445|\u0425)[1-9][0-9]?)))|.*([1-9][0-9]?(\u0078|\u0058|\u0445|\u0425).+(?=([1-9][0-9]?(\u0078|\u0058|\u0445|\u0425))))/;
 
 //const str = strCombinedRev.replace(/х/g, "x").replace(/Х/g, "x");
-const message = "Nado: x2 USB flash disks GoodRam UMM3 32GBx3 USB flash disks HOCO UD9 Mini Car Music USB 2.0 64GBx1 iphone xRx5 Redmi Note 10s";
+const message = "NadoNadoNadoNado: NadoNadoNado Nado 2x USB flash disks GoodRam UMM3 32GBx3 USB flash disks HOCO UD9 Mini Car Music USB 2.0 64GBx1iphone xRx5 Redmi Note 10sx2 Original USB Cable - HUAWEI HL-1289 (AP-71) USB-C 3.1 vads baltsx1 Portatīvo story displays 350mm Matte OPS 30pin Slim 15.6 1920x1080 x1 Cooler Master MPE-4001-ACABW 400 Wx1Huawei Mate 20 Lite kameras stikliņšx1Ugreen USB 3.0 pagarinājuma vads, 2mx1 AData XPG SX6000 Pro PCIe M.2 Gen3x4 NVME 256GB SSD";
 //const regex = /(.*|\s?)((\u0078|\u0058)[1-9][0-9]?.+(?=((\u0078|\u0058)[1-9][0-9]?)))/;
-const regexQuantity = /x[1-9]([0-9]?)+?/g;
-const matchesQ = message.match(regexQuantity);//quantities
-const matchesN = message.split(regexQuantity).filter(item => item.length != 0);//names
-console.log(matchesN);
+
+console.log(getTransfers(message));
+
+function getTransfers(str) {
+    const message = normalizeMessage(str);
+    console.log(message);
+    const regQuantity = /x[1-9]{1,2}(?![0-9]{1,2})/g;
+    const quantitiesCollection = collect(message.match(regQuantity));//quantities
+    const namesCollection = collect(message.split(regQuantity)
+        .filter(item => item.length > 2)
+        .map(item => item.trim())
+    );
+
+    return namesCollection.combine(quantitiesCollection).all();
+}
 
 function getItems(str) {
     let s = strCombinedRev;
     s = clearX(s);
-    const re = /[1-9]x\s/g;
+    const re = /[1-9]{1,3}x/g;
     while ((match = re.exec(s)) != null) {
         s = swapChars(s, match.index, match.index + 1);
     }
@@ -80,7 +93,7 @@ function clearX(str) {
 }
 
 function clearBefore(str) {
-    const re = /\u0078[1-9]\s/g;
+    const re = /x[1-9]{1,2}/g;
     const regIndex = indexOfRegex(str, re);
 
     if(regIndex > 0) {
@@ -93,6 +106,34 @@ function clearBefore(str) {
 
 function indexOfRegex(str, regex) {
     return regex.exec(str).index;
+}
+
+function nextIndexOfRegex(str, regex, count) {
+    let i = 0;
+    while ((match = regex.exec(str)) != null) {
+        if(count == ++i) {
+            return match.index;
+        }
+    }
+
+    return -1;
+}
+
+function normalizeMessage(str) {
+    let message = clearX(str);
+    const re = /[1-9]{1,2}x/g;
+    while ((match = re.exec(message)) != null) {
+        if(isNumeric(match.index + 1)) {
+            message = swapChars(message, match.index + 1, match.index + 2);
+        }
+        message = swapChars(message, match.index, match.index + 1);
+    }
+
+    return clearBefore(message);
+}
+
+function isNumeric(c){
+    return /^\d$/.test(c);
 }
 
 function swapChars(str, index1, index2) {
