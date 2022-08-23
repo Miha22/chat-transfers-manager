@@ -1,4 +1,11 @@
 {
+  "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ]
+  },
   "compileOnSave": false,
   "compilerOptions": {
       "allowUnreachableCode": true,
@@ -19,6 +26,39 @@
       "strictFunctionTypes": true,
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
-      "useUnknownInCatchVariables": true
+      "useUnknownInCatchVariables": true,
+      "allowUmdGlobalAccess": false,
+      "baseUrl": "./",
+      "rootDir": ".",
+      "module": "ES2020",
+      "moduleResolution": "nodenext",
+      "resolveJsonModule": true,
+      "declaration": true,
+      "emitDeclarationOnly": false,
+      "declarationDir": "./types",
+      "outDir": "dist",
+      "declarationMap": true,
+      "downlevelIteration": true,
+      "emitBOM": false,
+      "importHelpers": true,
+      "inlineSourceMap": false,
+      "inlineSources": false,
+      "preserveConstEnums": true,
+      "preserveValueImports": true,
+      "removeComments": true,
+      "sourceMap": true,
+      "allowJs": true,
+      "checkJs": true,
+      "maxNodeModuleJsDepth": 0,
+      "plugins": [
+        {
+          "name": "typescript-eslint-language-service",
+        },
+        {
+          "name": "typescript-styled-plugin"
+        }
+      ],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": false,
   }
 }
